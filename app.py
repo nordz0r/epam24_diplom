@@ -6,10 +6,7 @@ import mariadb
 from datetime import date, datetime
 import pandas as pd
 from pandas.tseries import offsets
-# import sqlalchemy
-# from sqlalchemy import create_engine
-# from sqlalchemy.engine.url import URL
-# import pymysql
+
 
 database_cred = {
     "host":"localhost",
@@ -63,19 +60,13 @@ def insert_data_to_db():
     db_conn.close()
 
 def main_app():
-    # pass
     insert_data_to_db()
 
 
-# insert_data_to_db()
-# get_data()
-
-
+# load data
 main_app()
 
 app = Flask(__name__)
-
-
 
 
 @app.route('/')
@@ -89,18 +80,16 @@ def index():
 def stats():
    country = request.form.get('country_code')
    db_conn = mariadb.connect(**database_cred)
-   #con = pymysql.connect(host="172.31.65.236",user="covid-app",password="laserdisk",database="covid-app")
    cur = db_conn.cursor()
-   #cur.execute("SELECT VERSION()")
-   cur.execute("select * from " + database_table + " where country_code = %s order by deaths", (country,))
-   # cur.execute("SELECT * FROM stats WHERE country_code = 'RUS' ORDER BY `stats`.`deaths` ASC")
+   cur.execute("select * from " + database_table + " where country_code = '" + country + "' order by deaths ASC")
    rows = cur.fetchall()
    return render_template('stats.html', rows = rows, country = country)
 
 
+
 @app.route('/update')
 def update():
-   main_app()
+   insert_data_to_db()
    return render_template('update.html', timestamp = timestamp)
 
 
@@ -111,4 +100,4 @@ def stress():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, host="0.0.0.0", port="8080")

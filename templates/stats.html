@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Covid Stats</title>
-  </head>
+{% extends 'header.html' %}
+
+{% block title %}
+Covid Stats
+{% endblock %}
+
+{% block body %}
   <body>
     <div>
       <input type="button" onclick="history.back();" value="Назад"/><br/>
     </div>
     <p>{{ country }}</p>
     <div>
-      <table border=1>
-        <thead>
+      <table class="table">
+        <thead class="thead-dark">
           <tr>
             <th scope="col">date_value</th>
             <th scope="col">confirmed</th>
@@ -22,15 +24,15 @@
         <tbody>
           {% for row in rows %}
           <tr>
-            <td>{{row[0]}}</td>
-            <td>{{row[2]}}</td>
+            <td>{{row[1]}}</td>
             <td>{{row[3]}}</td>
             <td>{{row[4]}}</td>
             <td>{{row[5]}}</td>
+            <td>{{row[6]}}</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
   </body>
-</html>
+{% endblock %}

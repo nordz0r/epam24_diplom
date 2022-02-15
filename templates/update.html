@@ -1,8 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Covid Stats</title>
-  </head>
+{% extends 'header.html' %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block body %}
   <body>
     <p>Successfully updated at {{ timestamp }}</p>
     <div>
@@ -10,3 +12,4 @@
     </div>
   </body>
 </html>
+{% endblock %}
