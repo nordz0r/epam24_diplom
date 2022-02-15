@@ -62,7 +62,8 @@ def insert_data_to_db():
     db_conn.close()
 
 def main_app():
-    insert_data_to_db()
+    pass
+    # insert_data_to_db()
 
 
 # insert_data_to_db()
