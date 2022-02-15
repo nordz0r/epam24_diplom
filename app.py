@@ -20,30 +20,16 @@ database_cred = {
 
 
 def get_data():
-    session = requests.Session()
     current_date = date.today()
-    # print(current_date)
-    # print(date(current_date.year, 1, 1))
     start_date = date(date.today().year, 1, 1)
-    # print(start_date)
     target_url = 'https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/' + str(start_date) + '/' + str(current_date)
-    # print(target_url)
-    # response = session.get(target_url)
     response = requests.get(target_url)
-    # global countries, timestamp
-    # countries = response.json()['countries']
-    # print(countries)
-    # timestamp = datetime.today().replace(microsecond=0)
-    # print(timestamp)
+    # get countries for dropmenu
+    global countries, timestamp
+    countries = response.json()['countries']
+    timestamp = datetime.today().replace(microsecond=0)
     table = response.json()['data']
-    # table = json.loads(response.text)
-    # print(table)
-    # resp_data = json.loads(response.text)
-    # table2 = resp_data['data']
-    return response.json()['data']
-    # print(table)
-    # print(table2)
-    # return table
+    return table
 
 def insert_data_to_db():
     # collect data
@@ -75,8 +61,24 @@ def insert_data_to_db():
     cur.close()
     db_conn.close()
 
+def main_app():
+    insert_data_to_db()
 
 
-
-insert_data_to_db()
+# insert_data_to_db()
 # get_data()
+
+
+main_app()
+
+app = Flask(__name__)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+@app.route('/')
+@app.route('/index')
+def index():
+   return render_template('index.html', countries = countries)
+
