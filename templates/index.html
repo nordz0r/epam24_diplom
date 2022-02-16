@@ -5,33 +5,32 @@ Index
 {% endblock %}
 
 {% block body %}
-  <div>
-    <form method="post" action="{{ url_for('stats') }}">
-      <p>Select country by code, then press "view stats":</p>
-      <div>
-        <select name="country_code" class="select" >
-        {% for country_code in countries %}
-        <option class="select" value="{{ country_code }}">{{country_code}}</option>
-        {% endfor %}
-        </select>
-      </div>
-      <div>
-        <br/><button type="submit">View stats</button>
-      </div>
-    </form>
-  </div>
-  <div>
-    <form action="{{ url_for('update') }}">
-      <br/><p>Update the database via covidtracker.bsg.ox.ac.uk:</p>
-      <button type="submit">Update</button>
-    </form>
-  </div>
-  <div>
-    <form action="{{ url_for('stress') }}">
-      <p>To test auto-scaling press the button below:</p>
-      <button type="submit">Stress</button>
-    </form>
-  </div>
+
+
+<div class="container">
+<table class="table">
+  <thead>
+    <tr class="head">
+      <th colspan="8">Countries</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set count = namespace(value=1) %}
+    {% for country_code in countries %}
+    {% if count.value == 1 %}
+      <tr scope="row">
+    {% endif %}
+        <td><a href="stats/{{ country_code }}">{{ country_code }}</a></td>
+    {% if count.value == 8 %}
+      {% set count.value = 1 %}
+      </tr>
+    {% else %}
+      {% set count.value = count.value + 1 %}
+    {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+</div>
 
 {% endblock %}
 

@@ -72,19 +72,16 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-    # insert_data_to_db()
     return render_template('index.html', countries = countries)
-    # return("Hello World!")
 
-@app.route('/stats', methods=['POST'])
-def stats():
-   country = request.form.get('country_code')
+
+@app.route('/stats/<country>')
+def stats(country):
    db_conn = mariadb.connect(**database_cred)
    cur = db_conn.cursor()
    cur.execute("select * from " + database_table + " where country_code = '" + country + "' order by deaths ASC")
    rows = cur.fetchall()
    return render_template('stats.html', rows = rows, country = country)
-
 
 
 @app.route('/update')
@@ -100,4 +97,4 @@ def stress():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host="0.0.0.0", port="8080")
+    app.run(debug=True, host="0.0.0.0", port="8080")

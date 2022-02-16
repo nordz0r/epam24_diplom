@@ -5,15 +5,14 @@ Covid Stats
 {% endblock %}
 
 {% block body %}
-  <body>
-    <div>
-      <input type="button" onclick="history.back();" value="Назад"/><br/>
+
+    <div class="container">
+       <h1 class="display-1 text-center">{{ country }}</h1>
     </div>
-    <p>{{ country }}</p>
-    <div>
+    <div class="container">
       <table class="table">
-        <thead class="thead-dark">
-          <tr>
+        <thead>
+          <tr class="head">
             <th scope="col">date_value</th>
             <th scope="col">confirmed</th>
             <th scope="col">deaths</th>
@@ -34,5 +33,5 @@ Covid Stats
         </tbody>
       </table>
     </div>
-  </body>
+
 {% endblock %}
