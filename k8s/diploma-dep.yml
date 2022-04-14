@@ -20,4 +20,4 @@ spec:
     spec:
       containers:
         - name: diploma-app
-          image: nordz0r/diploma:latest
+          image: nordz0r/epam24_diplom:latest
