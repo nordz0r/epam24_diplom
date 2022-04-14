@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    env: develop
+    app: main
+    tier: python
+    owner: NorD
+  name: diploma-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diploma-app
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: diploma-app
+    spec:
+      containers:
+        - name: diploma-app
+          image: nordz0r/diploma:latest
