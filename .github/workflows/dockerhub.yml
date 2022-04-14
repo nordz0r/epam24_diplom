@@ -44,9 +44,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
     steps:
     - name: Debug
       run: |
@@ -57,6 +54,7 @@ jobs:
         docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
     - name: Build the Docker image
       run: |
+        cd app
         echo "$GITHUB_CONTEXT"
         docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest .
     - name: Docker Push
