@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build the Docker image
       run: |
-        cd app
         docker build . --file Dockerfile --tag $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$(date +%s)
+      working-directory: ./app
     - name: Docker Push
       run: docker push $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
