@@ -1,57 +1,60 @@
-# name: DockerHub
-
-# on:
-#   push:
-#     branches:
-#       - 'main'
-#   workflow_dispatch:
-
-# jobs:
-#   docker:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Set up QEMU
-#         uses: docker/setup-qemu-action@v1
-#       - name: Set up Docker Buildx
-#         uses: docker/setup-buildx-action@v1
-#       - name: Login to DockerHub
-#         uses: docker/login-action@v1
-#         with:
-#           username: ${{ secrets.DOCKERHUB_USERNAME }}
-#           password: ${{ secrets.DOCKERHUB_TOKEN }}
-#       - name: Build and push
-#         run: |
-#           cd app
-#           docker push nordz0r/epam24_diplom:latest
-
-
-
-
-name: Docker Image CI
+name: DockerHub
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - 'main'
   workflow_dispatch:
 
-env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-  DOCKERHUB_REPO: ${{ github.event.repository.name }}
-
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout 
-      uses: actions/checkout@v2
-    - name: Debug
-      run: |
-        echo "$GITHUB_CONTEXT"
-        env
-        ls -lha
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build the Docker image
+        run: |
+          cd app
+          docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest .
+      - name: Docker Push
+        run: docker push $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest
+
+
+
+# name: Docker Image CI
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+#   workflow_dispatch:
+
+# env:
+#   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+#   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+#   DOCKERHUB_REPO: ${{ github.event.repository.name }}
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout 
+#       uses: actions/checkout@v2
+#     - name: Debug
+#       run: |
+#         echo "$GITHUB_CONTEXT"
+#         env
+#         ls -lha
     # - name: Login to DockerHub
     #   run: |
     #     docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
