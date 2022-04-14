@@ -1,0 +1,36 @@
+{% extends 'header.html' %}
+
+{% block title %}
+Countries
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+<table class="table">
+  <thead>
+    <tr class="head">
+      <th colspan="8">Countries</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set count = namespace(value=1) %}
+    {% for country_code in countries %}
+    {% if count.value == 1 %}
+      <tr scope="row">
+    {% endif %}
+        <td><a href="stats/{{ country_code }}">{{ country_code }}</a></td>
+    {% if count.value == 8 %}
+      {% set count.value = 1 %}
+      </tr>
+    {% else %}
+      {% set count.value = count.value + 1 %}
+    {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% endblock %}
+

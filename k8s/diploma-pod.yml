@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: diploma
+  labels:
+    env: develop
+    app: main
+    tier: python
+    owner: NorD
+spec:
+  containers:
+    - name: diploma-app
+      image: nordz0r/diploma:latest
+      ports:
+        - containerPort: 8080

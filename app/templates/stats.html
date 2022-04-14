@@ -1,0 +1,37 @@
+{% extends 'header.html' %}
+
+{% block title %}
+Covid Stats
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+       <h1 class="display-1 text-center">{{ country }}</h1>
+    </div>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr class="head">
+            <th scope="col">date_value</th>
+            <th scope="col">confirmed</th>
+            <th scope="col">deaths</th>
+            <th scope="col">stringency_actual</th>
+            <th scope="col">stringency</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{row[1]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+            <td>{{row[5]}}</td>
+            <td>{{row[6]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+{% endblock %}
