@@ -49,13 +49,14 @@ jobs:
       run: |
         echo "$GITHUB_CONTEXT"
         env
-    - name: Login to DockerHub
-      run: |
-        docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-    - name: Build the Docker image
-      run: |
-        cd ../app
-        echo "$GITHUB_CONTEXT"
-        docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest .
-    - name: Docker Push
-      run: docker push $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest
+        ls -lha
+    # - name: Login to DockerHub
+    #   run: |
+    #     docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+    # - name: Build the Docker image
+    #   run: |
+    #     cd ../app
+    #     echo "$GITHUB_CONTEXT"
+    #     docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest .
+    # - name: Docker Push
+    #   run: docker push $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest
