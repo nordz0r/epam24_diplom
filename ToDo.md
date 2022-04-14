@@ -1,4 +1,5 @@
 # ToDo
 
-1. Update block database
-2. Make Stress test
+- [ ] Update block database
+- [ ] Make Stress test
+- [x] Create Actions
