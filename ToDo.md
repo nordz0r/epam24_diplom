@@ -1,5 +1,18 @@
 # ToDo
 
-- [ ] Update block database
+- [x] Diploma-app v0.1
+- [x] Dockerfile
+- [ ] Separate front and back
+- [ ] Refactore block database
 - [ ] Make Stress test
-- [x] Create Actions
+- [ ] Create GitHub Actions
+	+ [ ] Push code to Sonar
+	+ [ ] Build and push container to ECR
+- [ ] Terraform IaC AWS code
+	+ [ ] RDS
+	+ [ ] EKS
+	+ [ ] ECR
+- [ ] Monitoring
+- [ ] Logging
+- [ ] Tests
+- [ ] Presentation
