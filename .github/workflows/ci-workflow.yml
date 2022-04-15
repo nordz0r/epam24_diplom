@@ -25,6 +25,8 @@ jobs:
           args: >
             -Dsonar.organization=NorD
             -Dsonar.projectKey=nordz0r
+            -Dsonar.python.version=3.9
+            -Dsonar.python.coverage.reportPaths=pycoverage.xml
   build:
     needs: [sonarcloud]
     runs-on: ubuntu-latest
