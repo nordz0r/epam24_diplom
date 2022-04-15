@@ -83,7 +83,6 @@ def main_app():
 main_app()
 
 app = Flask(__name__)
-app.config['WTF_CSRF_ENABLED'] = False
 
 
 @app.route('/')
