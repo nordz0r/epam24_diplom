@@ -9,7 +9,7 @@ on:
 
 
 jobs:
-  sonarcloud:
+  SonarCloud:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,7 +27,7 @@ jobs:
             -Dsonar.projectKey=nordz0r_epam24_diplom
             -Dsonar.python.version=3.9
             -Dsonar.python.coverage.reportPaths=pycoverage.xml
-  build:
+  Build Container to DockerHub:
     needs: [sonarcloud]
     runs-on: ubuntu-latest
     env:
