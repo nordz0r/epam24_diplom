@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: App Building and Ci/CD
 
 on:
   push:
@@ -13,16 +13,23 @@ env:
   DOCKERHUB_REPO: ${{ github.event.repository.name }}
 
 jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   build:
+    needs: [sonarcloud]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Debug
-      run: |
-        echo "$GITHUB_CONTEXT"
-        env
-        ls -lha
     - name: Login to DockerHub
       run: |
         docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
