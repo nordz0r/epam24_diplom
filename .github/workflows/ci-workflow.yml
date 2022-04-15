@@ -21,12 +21,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        # with:
-        #   args: >
-        #     -Dsonar.organization=NorD
-        #     -Dsonar.projectKey=nordz0r
-        #     -Dsonar.python.version=3.9
-        #     -Dsonar.python.coverage.reportPaths=pycoverage.xml
+        with:
+          args: >
+            -Dsonar.organization=nordz0r
+            -Dsonar.projectKey=nordz0r_epam24_diplom
+            -Dsonar.python.version=3.9
+            -Dsonar.python.coverage.reportPaths=pycoverage.xml
   build:
     needs: [sonarcloud]
     runs-on: ubuntu-latest
