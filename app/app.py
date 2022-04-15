@@ -9,7 +9,7 @@ from pandas.tseries import offsets
 
 
 database_cred = {
-    "host":"covid.cw1htr89vlre.eu-north-1.rds.amazonaws.com",
+    "host":"mysql.cw1htr89vlre.eu-north-1.rds.amazonaws.com",
     "user":"covid",
     "password":"laserdisk",
     "database":"covid"
