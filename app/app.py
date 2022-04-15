@@ -8,6 +8,7 @@ import pandas as pd
 from pandas.tseries import offsets
 
 
+
 database_cred = {
     "host":"172.18.210.178",
     "user":"covid_app",
@@ -82,6 +83,7 @@ def main_app():
 main_app()
 
 app = Flask(__name__)
+app.config['WTF_CSRF_ENABLED'] = False
 
 
 @app.route('/')
