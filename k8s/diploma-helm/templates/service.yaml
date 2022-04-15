@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.container.name }}
+  labels:
+    env: {{ .Values.container.env }}
+    app: {{ .Values.container.name }}
+    owner: {{ .Values.container.owner }}
+spec:
+  selector:
+    project: {{ .Values.container.name }}
+  ports:
+    - name: {{ .Values.container.name }}
+      protocol: TCP
+      port: {{ .Values.container.port }}
+      targetPort: {{ .Values.container.targetPort }}
+  type: LoadBalancer

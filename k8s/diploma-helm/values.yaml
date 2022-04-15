@@ -1,0 +1,9 @@
+container:
+  name: diploma-app
+  image: nordz0r/epam24_diplom:latest
+  port: 80
+  targetPort: 8080
+  owner: NorD
+  env: develop
+
+replicaCount: 1
