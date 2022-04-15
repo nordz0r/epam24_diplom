@@ -22,7 +22,7 @@ resource "aws_security_group" "sg_rds" {
 # Crete DB subnet for RDS
 resource "aws_db_subnet_group" "default" {
   name       = "main"
-  subnet_ids = var.subnets
+  subnet_ids = var.subnets_private
 }
 
 resource "aws_db_instance" "mysql" {
@@ -41,6 +41,8 @@ resource "aws_db_instance" "mysql" {
   storage_type                    = "gp2"
   vpc_security_group_ids          = [aws_security_group.sg_rds.id]
   skip_final_snapshot             = true
+  storage_encrypted               = true
+  backup_retention_period         = 7
   tags                            = merge(var.tags, { Name = "RDS mysql" })
 }
 

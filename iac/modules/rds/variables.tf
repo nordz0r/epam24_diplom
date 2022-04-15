@@ -9,7 +9,7 @@ variable "db_password" {
 }
 
 ## Subnets from main module
-variable "subnets" {
+variable "subnets_private" {
 }
 
 ## Tags

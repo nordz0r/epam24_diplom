@@ -161,13 +161,13 @@ resource "aws_route_table_association" "private-association-2" {
 # Modules
 ## RDS
 module "rds" {
-  source        = "./modules/rds"
-  subnets       = [aws_subnet.public-1.id, aws_subnet.public-2.id]
-  vpc           = aws_vpc.vpc.id
-  db_name       = var.db_name
-  db_user       = var.db_user
-  db_password   = var.db_password
-  tags          = var.tags
+  source          = "./modules/rds"
+  subnets_private = [aws_subnet.private-1.id, aws_subnet.private-2.id]
+  vpc             = aws_vpc.vpc.id
+  db_name         = var.db_name
+  db_user         = var.db_user
+  db_password     = var.db_password
+  tags            = var.tags
 }
 
 
