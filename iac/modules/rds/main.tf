@@ -5,9 +5,10 @@ resource "aws_security_group" "sg_rds" {
   vpc_id      = var.vpc
   ingress {
     description     = "SG for RDS"
-    from_port       = 3306
-    to_port         = 3306
+    from_port       = "3306"
+    to_port         = "3306"
     protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
   }
   egress {
     from_port   = 0
@@ -19,7 +20,7 @@ resource "aws_security_group" "sg_rds" {
 }
 
 
-# Crete DB subnet for RDS
+## Crete DB subnet for RDS
 resource "aws_db_subnet_group" "default" {
   name       = "main"
   subnet_ids = var.subnets_private
@@ -35,7 +36,7 @@ resource "aws_db_instance" "mysql" {
   db_name                         = var.db_name
   username                        = var.db_user
   password                        = var.db_password
-  publicly_accessible             = true
+  publicly_accessible             = false
   allocated_storage               = 20
   max_allocated_storage           = 0
   storage_type                    = "gp2"

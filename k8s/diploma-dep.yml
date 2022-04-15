@@ -24,3 +24,12 @@ spec:
           ports:
             - containerPort: 80
           imagePullPolicy: Always
+        - env:
+          - name: db_host
+            value: mysql.cw1htr89vlre.eu-north-1.rds.amazonaws.com
+          - name: db_user
+            value: covid
+          - name: db_password
+            value: laserdisk
+          - name: db_database
+            value: covid

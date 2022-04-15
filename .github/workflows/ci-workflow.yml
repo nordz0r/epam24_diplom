@@ -27,8 +27,8 @@ jobs:
             -Dsonar.projectKey=nordz0r_epam24_diplom
             -Dsonar.python.version=3.9
             -Dsonar.python.coverage.reportPaths=pycoverage.xml
-  Build Container to DockerHub:
-    needs: [sonarcloud]
+  Build:
+    needs: [SonarCloud]
     runs-on: ubuntu-latest
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

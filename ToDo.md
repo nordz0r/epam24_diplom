@@ -6,12 +6,11 @@
 - [ ] Refactore block database
 - [ ] Make Stress test
 - [ ] Create GitHub Actions
-	+ [ ] Push code to Sonar
-	+ [ ] Build and push container to ECR
-- [ ] Terraform IaC AWS code
-	+ [ ] RDS
-	+ [ ] EKS
-	+ [ ] ECR
+	+ [x] Push code to Sonar
+	+ [x] Build and push container to DockerHub
+- [x] Terraform IaC AWS code
+	+ [x] RDS
+	+ [x] EKS
 - [ ] Monitoring
 - [ ] Logging
 - [ ] Tests

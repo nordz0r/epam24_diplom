@@ -70,9 +70,9 @@ resource "aws_subnet" "private-1" {
 resource "aws_subnet" "private-2" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "192.168.20.0/24"
-  availability_zone = data.aws_availability_zones.available.names[0]
+  availability_zone = data.aws_availability_zones.available.names[1]
   tags              = merge(var.tags, {
-    Name                              = "Private subnet in ${data.aws_availability_zones.available.names[0]}"
+    Name                              = "Private subnet in ${data.aws_availability_zones.available.names[1]}"
     "kubernetes.io/cluster/eks"       = "shared"
     "kubernetes.io/role/internal-elb" = 1
     })
@@ -171,7 +171,7 @@ module "rds" {
 }
 
 
-## EKS
+# EKS
 module "eks" {
   source          = "./modules/eks"
   subnets_all     = [aws_subnet.private-1.id, aws_subnet.private-2.id, aws_subnet.public-1.id, aws_subnet.public-2.id]
