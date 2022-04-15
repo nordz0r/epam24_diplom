@@ -23,7 +23,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.organization=NorD
+            -Dsonar.organization=NorD1
             -Dsonar.projectKey=nordz0r
             -Dsonar.python.version=3.9
             -Dsonar.python.coverage.reportPaths=pycoverage.xml
