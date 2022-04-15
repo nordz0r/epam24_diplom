@@ -21,3 +21,6 @@ spec:
       containers:
         - name: diploma-app
           image: nordz0r/epam24_diplom:latest
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
