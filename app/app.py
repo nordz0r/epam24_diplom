@@ -9,10 +9,10 @@ from pandas.tseries import offsets
 
 
 database_cred = {
-    "host":"mysql.cw1htr89vlre.eu-north-1.rds.amazonaws.com",
-    "user":"covid",
+    "host":"localhost",
+    "user":"covid_app",
     "password":"laserdisk",
-    "database":"covid"
+    "database":"covid_app"
 }
 
 # database_cred = {
@@ -21,9 +21,6 @@ database_cred = {
 #     "password":os.getenv('db_password'),
 #     "database":os.getenv('db_database')
 # }
-
-
-
 
 def get_data():
     current_date = date.today()
