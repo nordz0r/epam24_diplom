@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: diploma-app
   labels:
     env: develop
     app: main
     tier: python
     owner: NorD
-  name: diploma-app
 spec:
   replicas: 1
   selector:
@@ -24,7 +24,7 @@ spec:
           ports:
             - containerPort: 80
           imagePullPolicy: Always
-        - env:
+          env:
           - name: db_host
             value: mysql.cw1htr89vlre.eu-north-1.rds.amazonaws.com
           - name: db_user
