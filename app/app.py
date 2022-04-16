@@ -8,15 +8,6 @@ import pandas as pd
 from pandas.tseries import offsets
 
 
-
-# database_cred = {
-#     "host":"172.18.210.178",
-#     "user":"covid_app",
-#     "password":"laserdisk",
-#     "database":"covid_app"
-# }
-
-
 database_cred = {
     "host":os.getenv('db_host'),
     "user":os.getenv('db_user'),

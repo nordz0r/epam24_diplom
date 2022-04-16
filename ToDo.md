@@ -5,7 +5,7 @@
 - [ ] Separate front and back
 - [ ] Refactore block database
 - [ ] Make Stress test
-- [ ] Create GitHub Actions
+- [x] Create GitHub Actions
 	+ [x] Push code to Sonar
 	+ [x] Build and push container to DockerHub
 - [x] Terraform IaC AWS code
