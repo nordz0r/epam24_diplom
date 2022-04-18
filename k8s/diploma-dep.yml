@@ -22,7 +22,7 @@ spec:
         - name: diploma-app
           image: nordz0r/epam24_diplom:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           imagePullPolicy: Always
           env:
           - name: db_host
