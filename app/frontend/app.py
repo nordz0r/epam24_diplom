@@ -39,14 +39,14 @@ def index():
    # cur = db_conn.cursor()
    # cur.execute("select DISTINCT country_code from " + database_table)
    # countries = cur.fetchall()
-   response = requests.get("os.getenv('backend')/backend/api/v1.0/countries")
+   response = requests.get(os.getenv('backend') + "/backend/api/v1.0/countries")
    countries = response.json()
    return render_template('index.html', countries = countries)
 
 
 @app.route('/stats/<country>')
 def stats(country):
-   response = requests.get("os.getenv('backend')/backend/api/v1.0/stats/" + country)
+   response = requests.get(os.getenv('backend') + "/backend/api/v1.0/stats/" + country)
    rows = response.json()
    return render_template('stats.html', rows = rows, country = country)
    # return rows
@@ -56,7 +56,7 @@ def stats(country):
 @app.route('/update')
 def update():
    timestamp = datetime.today().replace(microsecond=0)
-   requests.get("os.getenv('backend')/backend/api/v1.0/update")
+   requests.get(os.getenv('backend') + "/backend/api/v1.0/update")
    return render_template('update.html', timestamp = timestamp)
 
 
