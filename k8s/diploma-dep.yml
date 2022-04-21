@@ -26,7 +26,7 @@ spec:
           imagePullPolicy: Always
           env:
           - name: db_host
-            value: mysql.cw1htr89vlre.eu-north-1.rds.amazonaws.com
+            value: 172.30.254.27
           - name: db_user
             value: covid
           - name: db_password
