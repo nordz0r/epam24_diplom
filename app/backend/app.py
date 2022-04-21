@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+from flask.json import JSONEncoder
 import os
 import requests
 import json
@@ -20,7 +21,6 @@ def get_data():
     start_date = date(date.today().year, 1, 1)
     target_url = 'https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/' + str(start_date) + '/' + str(current_date)
     response = requests.get(target_url)
-    # get countries for dropmenu
     global countries, timestamp
     countries = response.json()['countries']
     timestamp = datetime.today().replace(microsecond=0)
@@ -44,8 +44,9 @@ def insert_data_to_db():
 
     cur = db_conn.cursor()
     # drop and new create new table
+    # cur.execute("TRUNCATE TABLE " + database_table)
     cur.execute("DROP TABLE IF EXISTS " + database_table)
-    cur.execute("CREATE TABLE " + database_table + " (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, date_value DATE, country_code VARCHAR(3), confirmed INT, deaths INT, stringency_actual FLOAT(5,2), stringency FLOAT(5,2))")
+    cur.execute("CREATE TABLE IF NOT EXISTS " + database_table + " (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, date_value DATE, country_code VARCHAR(3), confirmed INT, deaths INT, stringency_actual FLOAT(5,2), stringency FLOAT(5,2))")
     # insert to database
     for result_data in result:
         try:
@@ -58,13 +59,17 @@ def insert_data_to_db():
     cur.close()
     db_conn.close()
 
-
-def stress_test():
-    prew = cur = 1
-    element = 1750000
-
-    for _ in range(int(element-2)):
-        prew, cur = cur, prew + cur
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        try:
+            if isinstance(obj, date):
+                return obj.isoformat()
+            iterable = iter(obj)
+        except TypeError:
+            pass
+        else:
+            return list(iterable)
+        return JSONEncoder.default(self, obj)
 
 def main_app():
     insert_data_to_db()
@@ -74,34 +79,39 @@ def main_app():
 main_app()
 
 app = Flask(__name__)
+app.json_encoder = CustomJSONEncoder
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template('index.html', countries = countries)
+
+@app.route('/backend/api/v1.0/countries', methods=['GET'])
+def get_countries():
+   db_conn = mariadb.connect(**database_cred)
+   cur = db_conn.cursor()
+   cur.execute("select DISTINCT country_code from " + database_table)
+   rows = cur.fetchall()
+   cur.close()
+   db_conn.close()
+   return jsonify(rows)
 
 
-@app.route('/stats/<country>')
+# @app.route('/stats/<country>')
+@app.route('/backend/api/v1.0/stats/<country>', methods=['GET'])
 def stats(country):
    db_conn = mariadb.connect(**database_cred)
    cur = db_conn.cursor()
    cur.execute("select * from " + database_table + " where country_code = '" + country + "' order by deaths ASC")
    rows = cur.fetchall()
-   return render_template('stats.html', rows = rows, country = country)
+   cur.close()
+   db_conn.close()
+
+   return jsonify(rows)
 
 
-@app.route('/update')
+@app.route('/backend/api/v1.0/update')
 def update():
    insert_data_to_db()
-   return render_template('update.html', timestamp = timestamp)
-
-
-@app.route('/stress')
-def stress():
-   stress_test()
-   return render_template('stress.html')
+   return {"message": "success"}
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port="8080")
+    app.run(debug=True, host="0.0.0.0", port="5000")

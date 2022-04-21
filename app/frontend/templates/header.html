@@ -12,12 +12,19 @@
 </head>
 <body>
     <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow shadow">
-      <h5 class="my-0 mr-md-auto font-weight-normal">Epam</h5>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/">Countries</a>
-        <a class="p-2 text-dark" href="/update">Update</a>
-        <a class="p-2 text-dark" href="/stress">Stress</a>
-      </nav>
+      <div class="my-0 mr-md-auto font-weight-normal">
+        <a href="/">
+          <img src="{{ url_for('static', filename='icons/epam.svg') }}" width="60" height="20"  alt="">
+        </a>
+      </div>
+<!--       <h5 class="mr-md-auto">Hiden text</h5> -->
+     <div>
+        <nav class="my-2 my-md-0 mr-md-3">
+          <a class="p-2 text-dark" href="/">Countries</a>
+          <a class="p-2 text-dark" href="/update">Update</a>
+          <a class="p-2 text-dark" href="/stress" onclick="let b = document.body.classList;b.add('shake');setTimeout(() => b.remove('shake'), 1000)">Stress</a>
+        </nav>
+      </div>
     </div>
     <br><br><br>
     {% block body %}{% endblock %}

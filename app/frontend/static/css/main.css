@@ -23,3 +23,16 @@ box-shadow: 0 2px 5px 0
 rgba(0, 0, 0, 0.5), 0
 0,1px 0,1px 0 rgba(0, 0, 0, 1);
 }
+
+
+.shake {
+    position: fixed;
+    animation: shake 100ms infinite;
+}
+
+@keyframes shake{
+    0%  {transform: translate( -5px, 0)}
+    25% {transform: translate( 10px,-5px)}
+    50% {transform: translate(-10px, 5px)}
+    75% {transform: translate(  5px, 0)}
+}

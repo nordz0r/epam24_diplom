@@ -20,7 +20,7 @@ Countries
     {% if count.value == 1 %}
       <tr scope="row">
     {% endif %}
-        <td><a href="stats/{{ country_code }}">{{ country_code }}</a></td>
+        <td><a href="stats/{{ country_code[0] }}">{{ country_code[0] }}</a></td>
     {% if count.value == 8 %}
       {% set count.value = 1 %}
       </tr>
