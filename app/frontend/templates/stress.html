@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Covid Stats</title>
-  </head>
+{% extends 'header.html' %}
+
+{% block title %}
+Update
+{% endblock %}
+
+{% block body %}
   <body>
-    <p>Done!</p>
-    <div>
-      <input type="button" onclick="history.back();" value="Назад"/>
+    <br><br><br><br><br><br>
+    <div class="container">
+       <h1 class="display-4 text-center">Stress done at <b>{{ timestamp.strftime('%H:%M (%d.%m.%Y)') }}</b></h1>
     </div>
+    <!-- <div class="d-flex justify-content-center">
+      <input type="button" class="btn btn-secondary btn-lg" onclick="history.back();" value="Назад"/>
+    </div> -->
   </body>
 </html>
+{% endblock %}

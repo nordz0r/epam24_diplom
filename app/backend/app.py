@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from flask.json import JSONEncoder
 import os
 import requests
 import json
@@ -43,7 +44,7 @@ def insert_data_to_db():
 
     cur = db_conn.cursor()
     # drop and new create new table
-    # cur.execute("TRUNCATE TABLE " + database_table)
+    cur.execute("TRUNCATE TABLE " + database_table)
     # cur.execute("DROP TABLE IF EXISTS " + database_table)
     cur.execute("CREATE TABLE IF NOT EXISTS " + database_table + " (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, date_value DATE, country_code VARCHAR(3), confirmed INT, deaths INT, stringency_actual FLOAT(5,2), stringency FLOAT(5,2))")
     # insert to database
@@ -58,6 +59,17 @@ def insert_data_to_db():
     cur.close()
     db_conn.close()
 
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        try:
+            if isinstance(obj, date):
+                return obj.isoformat()
+            iterable = iter(obj)
+        except TypeError:
+            pass
+        else:
+            return list(iterable)
+        return JSONEncoder.default(self, obj)
 
 def main_app():
     insert_data_to_db()
@@ -67,7 +79,8 @@ def main_app():
 main_app()
 
 app = Flask(__name__)
-# api = Api()
+app.json_encoder = CustomJSONEncoder
+
 
 
 @app.route('/backend/api/v1.0/countries', methods=['GET'])
@@ -76,6 +89,8 @@ def get_countries():
    cur = db_conn.cursor()
    cur.execute("select DISTINCT country_code from " + database_table)
    rows = cur.fetchall()
+   cur.close()
+   db_conn.close()
    return jsonify(rows)
 
 
@@ -86,6 +101,8 @@ def stats(country):
    cur = db_conn.cursor()
    cur.execute("select * from " + database_table + " where country_code = '" + country + "' order by deaths ASC")
    rows = cur.fetchall()
+   cur.close()
+   db_conn.close()
    # return render_template('stats.html', rows = rows, country = country)
    return jsonify(rows)
 

@@ -62,8 +62,9 @@ def update():
 
 @app.route('/stress')
 def stress():
+   timestamp = datetime.today().replace(microsecond=0)
    stress_test()
-   return render_template('stress.html')
+   return render_template('stress.html', timestamp = timestamp)
 
 
 if __name__ == '__main__':
