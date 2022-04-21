@@ -8,13 +8,6 @@ import pandas as pd
 from pandas.tseries import offsets
 
 
-database_cred = {
-    "host":os.getenv('db_host'),
-    "user":os.getenv('db_user'),
-    "password":os.getenv('db_password'),
-    "database":os.getenv('db_database')
-}
-
 def stress_test():
     prew = cur = 1
     element = 1750000
@@ -34,11 +27,6 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-   # database_table = "covid_stats"
-   # db_conn = mariadb.connect(**database_cred)
-   # cur = db_conn.cursor()
-   # cur.execute("select DISTINCT country_code from " + database_table)
-   # countries = cur.fetchall()
    response = requests.get(os.getenv('backend') + "/backend/api/v1.0/countries")
    countries = response.json()
    return render_template('index.html', countries = countries)
@@ -49,8 +37,6 @@ def stats(country):
    response = requests.get(os.getenv('backend') + "/backend/api/v1.0/stats/" + country)
    rows = response.json()
    return render_template('stats.html', rows = rows, country = country)
-   # return rows
-
 
 
 @app.route('/update')
