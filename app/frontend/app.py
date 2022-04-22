@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 import os
 import requests
 import json
-import mariadb
 from datetime import date, datetime
 import pandas as pd
 from pandas.tseries import offsets

@@ -29,3 +29,6 @@ override.tf.json
 # example: *tfplan*
 # Notepad
 hints.txt
+
+# Kuber
+#k8s/*

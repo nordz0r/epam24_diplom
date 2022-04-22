@@ -1,10 +1,10 @@
-name: App Building and Ci/CD
+name: App Building and Ci/CD for feature
 
 on:
-  # push:
+  push:
+    branches: [ feature ]
+  # pull_request:
   #   branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 
@@ -25,13 +25,13 @@ jobs:
             -Dsonar.projectKey=nordz0r_epam24_diplom
             -Dsonar.python.version=3.9
             -Dsonar.python.coverage.reportPaths=pycoverage.xml
-  Build:
+  Build-backend:
     needs: [SonarCloud]
     runs-on: ubuntu-latest
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      DOCKERHUB_REPO: ${{ github.event.repository.name }}
+      DOCKERHUB_REPO: "covapp-backend"
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -40,7 +40,26 @@ jobs:
         docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
     - name: Build the Docker image
       run: |
-        cd app
+        cd app/backend
+        docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$(date +%s) .
+    - name: Docker Push
+      run: docker push -a $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
+  Build-frontend:
+    needs: [SonarCloud]
+    runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      DOCKERHUB_REPO: "covapp-frontend"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      run: |
+        docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+    - name: Build the Docker image
+      run: |
+        cd app/frontend
         docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$(date +%s) .
     - name: Docker Push
       run: docker push -a $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
