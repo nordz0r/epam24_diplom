@@ -31,4 +31,4 @@ override.tf.json
 hints.txt
 
 # Kuber
-k8s/*
+#k8s/*

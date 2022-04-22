@@ -1,0 +1,47 @@
+# Deployment Frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: covapp-frontend
+  name: covapp-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: covapp-frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: covapp-frontend
+    spec:
+      containers:
+      - image: nordz0r/covapp-frontend:latest
+        name: covapp-frontend
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+          - name: backend
+            value: http://covapp-backend:5000
+      dnsPolicy: ClusterFirst
+
+---
+
+# Service for Frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: covapp-frontend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: covapp-frontend
