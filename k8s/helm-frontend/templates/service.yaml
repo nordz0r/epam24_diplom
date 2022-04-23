@@ -1,0 +1,12 @@
+# Service for Frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  ports:
+  - port: {{ .Values.image.port }}
+    protocol: TCP
+    targetPort: {{ .Values.image.port }}
+  selector:
+    app: {{ .Chart.Name }}

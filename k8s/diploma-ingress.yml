@@ -1,4 +1,4 @@
-# CertManager
+# CertManager Prod
 
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -10,7 +10,8 @@ spec:
     email: nord@covid-app.ru
     privateKeySecretRef:
       name: letsencrypt-prod
-    server: https://acme-v02.api.letsencrypt.org/directory
+    #server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     solvers:
     - http01:
         ingress:
@@ -18,13 +19,35 @@ spec:
 
 ---
 
-# Frontend
+# CertManager Dev
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-dev
+  namespace: cert-manager
+spec:
+  acme:
+    email: nord@covid-app.ru
+    privateKeySecretRef:
+      name: letsencrypt-dev
+    #server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    solvers:
+    - http01:
+        ingress:
+          class: contour
+
+---
+
+# Frontend Prod
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  namespace: prod
   name: ingress-web
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-dev
     ingress.kubernetes.io/force-ssl-redirect: "true"
     kubernetes.io/ingress.class: contour
     kubernetes.io/tls-acme: "true"
@@ -36,6 +59,36 @@ spec:
     - covid-app.ru
   rules:
   - host: covid-app.ru
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: covapp-frontend
+            port:
+              number: 8080
+
+---
+# Frontend Dev
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: dev
+  name: ingress-web
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: contour
+    kubernetes.io/tls-acme: "true"
+    projectcontour.io/response-timeout: infinity
+spec:
+  tls:
+  - secretName: covapp-frontend-dev
+    hosts:
+    - dev.covid-app.ru
+  rules:
+  - host: dev.covid-app.ru
     http:
       paths:
       - pathType: Prefix

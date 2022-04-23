@@ -1,0 +1,37 @@
+# Deployment Frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+      - image: {{ .Values.image.image }}
+        name: {{ .Chart.Name }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.image.port }}
+        resources:
+          limits:
+            cpu: "0.7"
+          requests:
+            cpu: "0.2"
+        env:
+          - name: backend
+            value: {{ .Values.env.backend }}
+      dnsPolicy: ClusterFirst

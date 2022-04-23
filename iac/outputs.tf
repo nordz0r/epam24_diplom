@@ -1,11 +1,11 @@
 # Outputs
-output "db_host" {
-  value = module.rds.db_host
-  description = "DB host"
+output "db-prod" {
+  value = module.rds.db_prod
+  description = "DB endpoint"
 }
 
-output "db" {
-  value = module.rds.db
+output "db-dev" {
+  value = module.rds.db_dev
   description = "DB endpoint"
 }
 

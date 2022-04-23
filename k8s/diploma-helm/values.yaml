@@ -4,6 +4,7 @@ container:
   port: 80
   targetPort: 8080
   owner: NorD
-  env: develop
+  env: dev
+
 
 replicaCount: 1

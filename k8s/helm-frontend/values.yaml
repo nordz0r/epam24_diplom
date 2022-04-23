@@ -1,0 +1,23 @@
+image:
+  name: covapp-frontend
+  image: nordz0r/covapp-frontend:latest
+  port: 8080
+  targetPort: 8080
+
+env:
+  backend: http://covapp-backend:5000
+
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 50
+
+ingress:
+  prefix: dev
+  name: covid-app
+  host: dev.covid-app.ru
+  mail: andrei_shcheglov@epam.com
+  certserver: https://acme-staging-v02.api.letsencrypt.org/directory
+  #certserver: https://acme-v02.api.letsencrypt.org/directory
+
+replicaCount: 2

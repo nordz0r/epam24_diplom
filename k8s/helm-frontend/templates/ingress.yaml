@@ -1,0 +1,45 @@
+# CertManager Prod
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-{{ .Values.ingress.prefix }}
+  namespace: cert-manager
+spec:
+  acme:
+    email: {{ .Values.ingress.mail }}
+    privateKeySecretRef:
+      name: letsencrypt-{{ .Values.ingress.prefix }}
+    server: {{ .Values.ingress.certserver }}
+    solvers:
+    - http01:
+        ingress:
+          class: contour
+---
+
+# Frontend Dev
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}-{{ .Values.ingress.prefix }}
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-{{ .Values.ingress.prefix }}
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: contour
+    kubernetes.io/tls-acme: "true"
+    projectcontour.io/response-timeout: infinity
+spec:
+  tls:
+  - secretName: {{ .Chart.Name }}-{{ .Values.ingress.prefix }}
+    hosts:
+    - {{ .Values.ingress.host }}
+  rules:
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: {{ .Chart.Name }}
+            port:
+              number: {{ .Values.image.port }}

@@ -26,8 +26,8 @@ resource "aws_db_subnet_group" "default" {
   subnet_ids = var.subnets_private
 }
 
-resource "aws_db_instance" "mysql" {
-  identifier                      = "mysql"
+resource "aws_db_instance" "mysql_prod" {
+  identifier                      = "mysqlprod"
   engine                          = "mysql"
   engine_version                  = "8.0.27"
   instance_class                  = "db.t3.micro"
@@ -47,3 +47,23 @@ resource "aws_db_instance" "mysql" {
   tags                            = merge(var.tags, { Name = "RDS mysql" })
 }
 
+resource "aws_db_instance" "mysql_dev" {
+  identifier                      = "mysqldev"
+  engine                          = "mysql"
+  engine_version                  = "8.0.27"
+  instance_class                  = "db.t3.micro"
+  db_subnet_group_name            = aws_db_subnet_group.default.name
+  enabled_cloudwatch_logs_exports = ["general", "error"]
+  db_name                         = var.db_name
+  username                        = var.db_user
+  password                        = var.db_password
+  publicly_accessible             = false
+  allocated_storage               = 20
+  max_allocated_storage           = 0
+  storage_type                    = "gp2"
+  vpc_security_group_ids          = [aws_security_group.sg_rds.id]
+  skip_final_snapshot             = true
+  storage_encrypted               = true
+  backup_retention_period         = 7
+  tags                            = merge(var.tags, { Name = "RDS mysql" })
+}

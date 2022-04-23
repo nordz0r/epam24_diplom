@@ -1,0 +1,38 @@
+# Deployment Backend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+      - image: {{ .Values.image.image }}
+        name: {{ .Chart.Name }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.image.port }}
+        env:
+          - name: db_host
+            value: {{ .Values.env.db_host }}
+          - name: db_user
+            value: {{ .Values.env.db_user }}
+          - name: db_password
+            value: {{ .Values.env.db_password }}
+          - name: db_database
+            value: {{ .Values.env.db_database }}
+      dnsPolicy: ClusterFirst
