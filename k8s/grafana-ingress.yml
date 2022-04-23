@@ -1,0 +1,48 @@
+# CertManager Grafana
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-grafana
+  namespace: cert-manager
+spec:
+  acme:
+    email: nord@covid-app.ru
+    privateKeySecretRef:
+      name: letsencrypt-grafana
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - http01:
+        ingress:
+          class: contour
+
+---
+# Grafana
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: monitoring
+  name: grafana
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-grafana
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: contour
+    kubernetes.io/tls-acme: "true"
+    projectcontour.io/response-timeout: infinity
+spec:
+  tls:
+  - secretName: grafana
+    hosts:
+    - grafana.covid-app.ru
+  rules:
+  - host: grafana.covid-app.ru
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+
