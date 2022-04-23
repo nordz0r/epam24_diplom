@@ -44,7 +44,7 @@ def insert_data_to_db():
 
     cur = db_conn.cursor()
     # drop and new create new table
-    cur.execute("TRUNCATE TABLE " + database_table)
+    # cur.execute("TRUNCATE TABLE " + database_table)
     # cur.execute("DROP TABLE IF EXISTS " + database_table)
     cur.execute("CREATE TABLE IF NOT EXISTS " + database_table + " (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, date_value DATE, country_code VARCHAR(3), confirmed INT, deaths INT, stringency_actual FLOAT(5,2), stringency FLOAT(5,2))")
     # insert to database

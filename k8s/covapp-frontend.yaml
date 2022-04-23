@@ -1,7 +1,16 @@
+# Namespace prod
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: dev
+
+---
 # Deployment Frontend
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: dev
   labels:
     app: covapp-frontend
   name: covapp-frontend
@@ -42,6 +51,7 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
+  namespace: dev
   name: covapp-frontend
   namespace: default
 spec:
@@ -59,6 +69,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: dev
   name: covapp-frontend
 spec:
   ports:
