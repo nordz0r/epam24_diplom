@@ -26,10 +26,9 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-   response = requests.get(os.getenv('backend') + "/backend/api/v1.0/countries")
+   response = requests.get(os.getenv('backend') + "/backend/api/v1.0/countries") #ToDO: fix zones!
    countries = response.json()
    return render_template('index.html', countries = countries)
-
 
 @app.route('/stats/<country>')
 def stats(country):
