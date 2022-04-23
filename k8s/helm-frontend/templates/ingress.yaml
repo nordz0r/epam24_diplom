@@ -31,7 +31,7 @@ spec:
   tls:
   - secretName: {{ .Chart.Name }}-{{ .Values.ingress.prefix }}
     hosts:
-    - dev.covid-app.ru
+    - {{ .Values.ingress.host }}
   rules:
   - host: {{ .Values.ingress.host }}
     http:
