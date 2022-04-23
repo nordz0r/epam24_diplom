@@ -1,61 +1,37 @@
+# Deployment Frontend
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "helm-frontend.fullname" . }}
+  name: {{ .Values.image.name }}
   labels:
-    {{- include "helm-frontend.labels" . | nindent 4 }}
+    app: {{ .Values.image.name }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "helm-frontend.selectorLabels" . | nindent 6 }}
+      app: {{ .Chart.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "helm-frontend.selectorLabels" . | nindent 8 }}
+        app: {{ .Chart.Name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "helm-frontend.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      - image: {{ .Values.image.image }}
+        name: {{ .Chart.Name }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.image.port }}
+        resources:
+          limits:
+            cpu: "0.7"
+          requests:
+            cpu: "0.2"
+        env:
+          - name: backend
+            value: {{ .Values.env.backend }}
+      dnsPolicy: ClusterFirst
