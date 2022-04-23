@@ -17,5 +17,7 @@ ingress:
   name: covid-app
   host: dev.covid-app.ru
   mail: andrei_shcheglov@epam.com
+  certserver: https://acme-staging-v02.api.letsencrypt.org/directory
+  #certserver: https://acme-v02.api.letsencrypt.org/directory
 
 replicaCount: 2

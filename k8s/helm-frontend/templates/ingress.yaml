@@ -9,7 +9,7 @@ spec:
     email: {{ .Values.ingress.mail }}
     privateKeySecretRef:
       name: letsencrypt-{{ .Values.ingress.prefix }}
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: {{ .Values.ingress.certserver }}
     solvers:
     - http01:
         ingress:

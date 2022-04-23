@@ -1,0 +1,14 @@
+image:
+  name: covapp-backend
+  image: nordz0r/covapp-backend:latest
+  port: 5000
+  targetPort: 5000
+
+env:
+  db_host: mysqldev.cw1htr89vlre.eu-north-1.rds.amazonaws.com
+  db_user: covid
+  db_password: laserdisk
+  db_database: covid
+
+
+replicaCount: 1

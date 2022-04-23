@@ -1,4 +1,4 @@
-# Deployment Frontend
+# Deployment Backend
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,12 +26,13 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: {{ .Values.image.port }}
-        resources:
-          limits:
-            cpu: "0.7"
-          requests:
-            cpu: "0.2"
         env:
-          - name: backend
-            value: {{ .Values.env.backend }}
+          - name: db_host
+            value: {{ .Values.env.db_host }}
+          - name: db_user
+            value: {{ .Values.env.db_user }}
+          - name: db_password
+            value: {{ .Values.env.db_password }}
+          - name: db_database
+            value: {{ .Values.env.db_database }}
       dnsPolicy: ClusterFirst

@@ -10,7 +10,8 @@ spec:
     email: nord@covid-app.ru
     privateKeySecretRef:
       name: letsencrypt-prod
-    server: https://acme-v02.api.letsencrypt.org/directory
+    #server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     solvers:
     - http01:
         ingress:
@@ -30,7 +31,8 @@ spec:
     email: nord@covid-app.ru
     privateKeySecretRef:
       name: letsencrypt-dev
-    server: https://acme-v02.api.letsencrypt.org/directory
+    #server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     solvers:
     - http01:
         ingress:

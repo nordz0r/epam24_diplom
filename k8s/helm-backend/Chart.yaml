@@ -1,0 +1,10 @@
+apiVersion : v2
+name       : covapp-backend
+description: Epam Stream24 Diploma Backend
+type       : application
+version    : 0.1.0
+appVersion : "1.0.0"
+
+maintainers:
+  - name : Andrei Shcheglov
+    email: andrei_shcheglov@epam.com
