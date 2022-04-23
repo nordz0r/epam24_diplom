@@ -3,7 +3,7 @@ name: App Building and Ci/CD for feature
 on:
   push:
     branches: [ feature ]
-      paths:
+    paths:
       - 'app/**'
   # pull_request:
   #   branches: [ main ]
