@@ -3,6 +3,8 @@ name: App Building and Ci/CD for feature
 on:
   push:
     branches: [ feature ]
+      paths:
+      - 'app/**'
   # pull_request:
   #   branches: [ main ]
   workflow_dispatch:
