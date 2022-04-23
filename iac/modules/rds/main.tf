@@ -27,7 +27,7 @@ resource "aws_db_subnet_group" "default" {
 }
 
 resource "aws_db_instance" "mysql_prod" {
-  identifier                      = "mysql"
+  identifier                      = "mysqlprod"
   engine                          = "mysql"
   engine_version                  = "8.0.27"
   instance_class                  = "db.t3.micro"
@@ -48,7 +48,7 @@ resource "aws_db_instance" "mysql_prod" {
 }
 
 resource "aws_db_instance" "mysql_dev" {
-  identifier                      = "mysql"
+  identifier                      = "mysqldev"
   engine                          = "mysql"
   engine_version                  = "8.0.27"
   instance_class                  = "db.t3.micro"
