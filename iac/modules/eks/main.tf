@@ -108,8 +108,8 @@ resource "aws_eks_node_group" "nodes-general" {
   node_role_arn   = aws_iam_role.nodes-general.arn
   subnet_ids      = var.subnets_private
   scaling_config {
-    desired_size = 2
-    max_size     = 3
+    desired_size = 3
+    max_size     = 4
     min_size     = 1
   }
   ami_type             = "AL2_x86_64"
