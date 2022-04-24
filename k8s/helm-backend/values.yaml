@@ -5,10 +5,10 @@ image:
   targetPort: 5000
 
 env:
-  db_host: mysqldev.cw1htr89vlre.eu-north-1.rds.amazonaws.com
-  db_user: covid
-  db_password: laserdisk
-  db_database: covid
+  db_host: db_host
+  db_user: db_user
+  db_password: db_password
+  db_database: db_database
 
 
 replicaCount: 1
