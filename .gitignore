@@ -31,4 +31,7 @@ override.tf.json
 hints.txt
 
 # Kuber
-#k8s/*
+# Tetsts
+k8s/tests
+# Secrets
+k8s/variables
