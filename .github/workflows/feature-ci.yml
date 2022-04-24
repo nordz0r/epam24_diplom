@@ -13,6 +13,7 @@ on:
 jobs:
   SonarCloud:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,6 +31,7 @@ jobs:
   Build-backend:
     needs: [SonarCloud]
     runs-on: ubuntu-latest
+    environment: dev
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -49,6 +51,7 @@ jobs:
   Build-frontend:
     needs: [SonarCloud]
     runs-on: ubuntu-latest
+    environment: dev
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
