@@ -140,7 +140,7 @@ jobs:
     - name: Container image scan
       uses: Azure/container-scan@v0.1
       with:
-        image-name: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest
+        image-name: $DOCKERHUB_REPO:latest
   ContainerScan-frontend:
     needs: [Build-frontend]
     runs-on: ubuntu-latest
@@ -152,4 +152,4 @@ jobs:
     - name: Container image scan
       uses: Azure/container-scan@v0.1
       with:
-        image-name: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest
+        image-name: $DOCKERHUB_REPO:latest
