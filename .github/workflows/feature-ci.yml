@@ -107,6 +107,10 @@ jobs:
       run: |
         cd app/backend
         docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$(date +%s) .
+    - name: ContainerScan
+      uses: Azure/container-scan@v0
+      with:
+        image-name: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$(date +%s)
     - name: Docker Push
       run: docker push -a $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
   Build-frontend:
@@ -129,27 +133,27 @@ jobs:
         docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$(date +%s) .
     - name: Docker Push
       run: docker push -a $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
-  ContainerScan-backend:
-    needs: [Build-backend]
-    runs-on: ubuntu-latest
-    environment: dev
-    env:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_REPO: "covapp-backend"
-    steps:
-    - name: Container image scan
-      uses: Azure/container-scan@v0.1
-      with:
-        image-name: $DOCKERHUB_REPO:latest
-  ContainerScan-frontend:
-    needs: [Build-frontend]
-    runs-on: ubuntu-latest
-    environment: dev
-    env:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_REPO: "covapp-frontend"
-    steps:
-    - name: Container image scan
-      uses: Azure/container-scan@v0.1
-      with:
-        image-name: $DOCKERHUB_REPO:latest
+  # ContainerScan-backend:
+  #   needs: [Build-backend]
+  #   runs-on: ubuntu-latest
+  #   environment: dev
+  #   env:
+  #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  #     DOCKERHUB_REPO: "covapp-backend"
+  #   steps:
+  #   - name: Container image scan
+  #     uses: Azure/container-scan@v0.1
+  #     with:
+  #       image-name: covapp-backend:latest
+  # ContainerScan-frontend:
+  #   needs: [Build-frontend]
+  #   runs-on: ubuntu-latest
+  #   environment: dev
+  #   env:
+  #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  #     DOCKERHUB_REPO: "covapp-frontend"
+  #   steps:
+  #   - name: Container image scan
+  #     uses: Azure/container-scan@v0.1
+  #     with:
+  #       image-name: covapp-frontend:latest
