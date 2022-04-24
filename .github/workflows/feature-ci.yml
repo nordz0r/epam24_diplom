@@ -5,6 +5,7 @@ on:
     branches: [ feature ]
     paths:
       - 'app/**'
+      - '.github/workflows/**'
   # pull_request:
   #   branches: [ main ]
   workflow_dispatch:
