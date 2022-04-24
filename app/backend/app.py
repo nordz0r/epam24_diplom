@@ -2,8 +2,8 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=line-too-long
-# noqa: E501
 # pylint: disable=method-hidden
+# pylint: disable=arguments-renamed
 import os
 from datetime import date
 
@@ -11,7 +11,6 @@ import mariadb
 import requests
 from flask import Flask, jsonify
 from flask.json import JSONEncoder
-
 
 database_cred = {
     "host": os.getenv('db_host'),
