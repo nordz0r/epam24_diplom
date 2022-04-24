@@ -52,6 +52,7 @@ jobs:
     needs: [SonarCloud]
     environment: dev
     runs-on: ubuntu-latest
+    environment: dev
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
