@@ -17,7 +17,7 @@ jobs:
     defaults:
       run:
         working-directory: app
-   steps:
+    steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
@@ -36,7 +36,7 @@ jobs:
     defaults:
       run:
         working-directory: app
-   steps:
+    steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
@@ -55,7 +55,7 @@ jobs:
     defaults:
       run:
         working-directory: app
-   steps:
+    steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
