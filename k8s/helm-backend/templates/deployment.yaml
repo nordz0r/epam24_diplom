@@ -5,7 +5,6 @@ metadata:
   name: {{ .Chart.Name }}
   labels:
     app: {{ .Chart.Name }}
-    date: {{ now | unixEpoch }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -20,6 +19,7 @@ spec:
     metadata:
       labels:
         app: {{ .Chart.Name }}
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
       - image: {{ .Values.image.image }}
