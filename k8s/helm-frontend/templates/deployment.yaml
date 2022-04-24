@@ -19,6 +19,7 @@ spec:
     metadata:
       labels:
         app: {{ .Chart.Name }}
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
       - image: {{ .Values.image.image }}
@@ -31,7 +32,4 @@ spec:
             cpu: "0.7"
           requests:
             cpu: "0.2"
-        env:
-          - name: backend
-            value: {{ .Values.env.backend }}
       dnsPolicy: ClusterFirst

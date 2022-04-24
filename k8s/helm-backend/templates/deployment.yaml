@@ -19,6 +19,7 @@ spec:
     metadata:
       labels:
         app: {{ .Chart.Name }}
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
       - image: {{ .Values.image.image }}
